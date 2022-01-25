@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
     <title>Search-Image</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,152 +15,155 @@
 <body>
 
     <form class="search-image" action="">
-        <input type="text" placeholder="search.." name="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
+        <input type="text" id="myinput" placeholder="search image.." name="search">
+        <button type="submit" id="search-btn"><i class="fa fa-search"></i></button>
     </form>
     <div class="container">
         <section class="Images">
+            <div id="pics">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/apple.webp" class="img-fluid image" alt="">
+                    <img src="images/apple.webp" class="img-fluid image" data-keyword="fruits,apple" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/bike.jpeg" class="img-fluid image" alt="">
+                    <img src="images/bike.jpeg" class="img-fluid image" data-keyword="vehicle,bike" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/bird.jpeg" class="img-fluid image" alt="">
+                    <img src="images/bird.jpeg" class="img-fluid image" data-keyword="bird" alt="">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/brazil-bird.webp" class="img-fluid image" alt="">
+                    <img src="images/brazil-bird.webp" class="img-fluid image" data-keyword="bird,brazil-bird" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/car.jpg" class="img-fluid image" alt="">
+                    <img src="images/car.jpg" class="img-fluid image" data-keyword="vehicle,car" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/imagesbike1.jpeg" class="img-fluid image" alt="">
+                    <img src="images/imagesbike1.jpeg" class="img-fluid image" data-keyword="vehicle,bike" alt="">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/pomegranate.jpg" class="img-fluid image" alt="">
+                    <img src="images/pomegranate.jpg" class="img-fluid image" data-keyword="fruits,pomegranate" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/red-car.jpeg" class="img-fluid image" alt="">
+                    <img src="images/red-car.jpeg" class="img-fluid image" data-keyword="vehicle,car" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/strawberries.jpeg" class="img-fluid image" alt="">
+                    <img src="images/strawberries.jpeg" class="img-fluid image" data-keyword="fruits,strawberries" alt="">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/mahindra-xuv500.jpg" class="img-fluid image" alt="">
+                    <img src="images/mahindra-xuv500.jpg" class="img-fluid image" data-keyword="vehicle,car" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/motorcycle.jpg" class="img-fluid image" alt="">
+                    <img src="images/motorcycle.jpg" class="img-fluid image" data-keyword="vehicle,bike" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/plum-headed-parakeet.jpg" class="img-fluid image" alt="">
+                    <img src="images/plum-headed-parakeet.jpg" class="img-fluid image" data-keyword="bird,plum-headed-parakeet" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/acer-laptop.webp" class="img-fluid image" alt="">
+                    <img src="images/acer-laptop.webp" class="img-fluid image" data-keyword="laptop,acer-laptop" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/elephant-1.jpeg" class="img-fluid image" alt="">
+                    <img src="images/elephant-1.jpeg" class="img-fluid image" data-keyword="animals,elephant" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/iphone-10.webp" class="img-fluid image" alt="">
+                    <img src="images/iphone-10.webp" class="img-fluid image" data-keyword="mobiles,iphone" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/iphone-12.webp" class="img-fluid image" alt="">
+                    <img src="images/iphone-12.webp" class="img-fluid image" data-keyword="mobiles,iphone" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/laptop-1.jpg" class="img-fluid image" alt="">
+                    <img src="images/laptop-1.jpg" class="img-fluid image" data-keyword="laptop" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/iphone-13.jpeg" class="img-fluid image" alt="">
+                    <img src="images/iphone-13.jpeg" class="img-fluid image" data-keyword="mobiles,iphone" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/laptop-2.jpg" class="img-fluid image" alt="">
+                    <img src="images/laptop-2.jpg" class="img-fluid image" data-keyword="laptop" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/laptop.jpg" class="img-fluid image" alt="">
+                    <img src="images/laptop.jpg" class="img-fluid image" data-keyword="laptop" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/elephant-2.jpeg" class="img-fluid image" alt="">
+                    <img src="images/elephant-2.jpeg" class="img-fluid image" data-keyword="animals,elephant" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/lenovo-laptop.jpg" class="img-fluid image" alt="">
+                    <img src="images/lenovo-laptop.jpg" class="img-fluid image" data-keyword="laptop,lenovo-laptop" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/laptop-apple.webp" class="img-fluid image" alt="">
+                    <img src="images/laptop-apple.webp" class="img-fluid image" data-keyword="laptop,apple-laptop" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/elephant.jpg" class="img-fluid image" alt="">
+                    <img src="images/elephant.jpg" class="img-fluid image" data-keyword="animals,elephant" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/oppo-mobile.jpg" class="img-fluid image" alt="">
+                    <img src="images/oppo-mobile.jpg" class="img-fluid image" data-keyword="mobiles,oppo" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/iphone-14pro.webp" class="img-fluid image" alt="">
+                    <img src="images/iphone-14pro.webp" class="img-fluid image" data-keyword="mobiles,iphone" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/micromax-mobile.png" class="img-fluid image" alt="">
+                    <img src="images/micromax-mobile.png" class="img-fluid image" data-keyword="mobiles,micromax" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/samsumg-galaxy-j8.jpg" class="img-fluid image" alt="">
+                    <img src="images/samsumg-galaxy-j8.jpg" class="img-fluid image" data-keyword="mobiles,samsumg" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/sparrow_bird.jpg" class="img-fluid image" alt="">
+                    <img src="images/sparrow_bird.jpg" class="img-fluid image" data-keyword="birds,sparrow" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/sparrow.jpg" class="img-fluid image" alt="">
+                    <img src="images/sparrow.jpg" class="img-fluid image" data-keyword="birds,sparrow" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/vivo-mobile.jpeg" class="img-fluid image" alt="">
+                    <img src="images/vivo-mobile.jpeg" class="img-fluid image" data-keyword="mobiles,vivo" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/sparrow-1.jpeg" class="img-fluid image" alt="">
+                    <img src="images/sparrow-1.jpeg" class="img-fluid image" data-keyword="birds,sparrow" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/vivo-v9.jpg" class="img-fluid image" alt="">
+                    <img src="images/vivo-v9.jpg" class="img-fluid image" data-keyword="mobiles,sparrow" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img src="images/two-parrots.webp" class="img-fluid image" alt="">
+                    <img src="images/two-parrots.webp" class="img-fluid image" data-keyword="birds,parrot" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/sparrow_bird.jpg" class="img-fluid image" alt="">
+                    <img src="images/sparrow_bird.jpg" class="img-fluid image" data-keyword="birds,sparrow" alt="">
                 </div>
                 <div class="col-md-4">
-                    <img src="images/vivo-y3-4gb-ram-128g.jpg" class="img-fluid image" alt="">
+                    <img src="images/vivo-y3-4gb-ram-128g.jpg" class="img-fluid image" data-keyword="mobiles,vivo" alt="">
                 </div>
             </div>
+        </div>
         </section>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
