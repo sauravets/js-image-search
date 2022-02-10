@@ -1,4 +1,4 @@
-
+// Create array of object-
 var images = [{ keyword: "fruits,apple", imageName: "apple.webp" },
 { keyword: "vehicle,bike", imageName: "bike.jpeg" },
 { keyword: "birds", imageName: "bird.jpeg" },
@@ -21,7 +21,7 @@ var images = [{ keyword: "fruits,apple", imageName: "apple.webp" },
 { keyword: "laptop", imageName: "laptop.jpg" },
 { keyword: "animals,elephant", imageName: "elephant-2.jpeg" },
 { keyword: "laptop,lenovo-laptop", imageName: "lenovo-laptop.jpg" },
-{ keyword: "laptop,apple-laptop", imageName: "laptop-apple.webp" },
+{ keyword: "laptop,laptop", imageName: "laptop-apple.webp" },
 { keyword: "animals,elephant", imageName: "elephant.jpg" },
 { keyword: "mobiles,oppo", imageName: "oppo-mobile.jpg" },
 { keyword: "mobiles,iphone", imageName: "iphone-14pro.webp" },
@@ -42,18 +42,16 @@ images_html();
 document.getElementById("search-btn").addEventListener("click", function (event) {
     event.preventDefault();
     let search_keyword = document.getElementById("myinput").value.toLowerCase();
-
-    setTimeout(function () {
-        let pics = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+// Store input values in local storage-
+    let pics = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+    if (!pics.includes(search_keyword))//Prevent duplicate values.
         pics.push(search_keyword);
-        localStorage.setItem('search_keyword', JSON.stringify(pics));
-    }, 1000);
-
+    localStorage.setItem('search_keyword', JSON.stringify(pics));
 
     images_html(search_keyword);
 
 });
-
+// Search images using search_keyword-
 function images_html(search_keyword = null) {
     let html = '';
     for (i = 0; i < images.length; i++) {
