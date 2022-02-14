@@ -39,40 +39,56 @@ var images = [{ keyword: "fruits,apple", imageName: "apple.webp" },
 
 images_html();
 
-document.getElementById("search-btn").addEventListener("click", function (event) {
+document.getElementById("myinput").addEventListener("keyup", function (event) {
     event.preventDefault();
     let search_keyword = document.getElementById("myinput").value.toLowerCase();
-    let list =document.getElementById("list");
+    // let list =document.getElementById("list");
     // create ul element-
-    let ul = document.createElement('ul');
-    ul.setAttribute('style','padding:0;magin:0');
+    // let ul = document.createElement('ul');
+    // ul.setAttribute('style','padding:0;magin:0');
 
-    for(let a=0;a<images.length;a++){
-        let li = document.createElement('li');
-        li.innerHTML = images[a];
-        li.setAttribute('style','display:block');
-        ul.appendChild(li);
+    // for(let a=0;a<images.length;a++){
+    //     let li = document.createElement('li');
+    //     li.innerHTML = images[a];
+    //     li.setAttribute('style','display:block');
+    //     ul.appendChild(li);
     //    li.appendChild(search_keyword);
     // list.appendChild(ul);
-    }
-    
-
-    // let x = document.getElementsByClassName('keyword');
-      
-    // for (i = 0; i < x.length; i++) { 
-    //     if (!x[i].innerHTML.toLowerCase().includes(search_keyword)) {
-    //         x[i].style.display="none";
-    //     }
-    //     else {
-    //         x[i].style.display="list-item";                 
-    //     }
     // }
+    // let search = ['hello','world','monday','tuesday'];
+    
+     
+ 
 // Store input values in local storage-
     let pics = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
     if (!pics.includes(search_keyword))//Prevent duplicate values.
         pics.push(search_keyword);
     localStorage.setItem('search_keyword', JSON.stringify(pics));
 
+    function prediction(input){
+        if (input == ''){
+            return [];
+        }
+        
+        let reg = new RegExp(search_keyword);
+        return pics.filter(function(term){
+            if(term.match(reg)){
+                return term;
+            }
+        });
+    }
+    prediction_result();
+
+    function prediction_result(val){
+        let res = document.getElementById('list');
+        res.innerHTML = '';
+        let list = '';
+        let terms = prediction(val);
+        for(let i=0;i<terms.length;i++){
+            list += '<li>' + terms[i] + '</li>';
+        }
+        res.innerHTML = '<ul>' + list + '</ul>'; 
+    }
     images_html(search_keyword);
 
 });

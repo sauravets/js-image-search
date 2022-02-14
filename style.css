@@ -44,3 +44,25 @@ form.search-image::after {
 .image:hover{
     box-shadow: 2px 3px 10px;
 }
+
+#list{
+  border: 1px dotted #ccc;
+  text-align: left;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 3px;
+}
+#list ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+#list ul li{
+padding: 5px 0px;
+}
+#list ul li:hover{
+  background: #eee;
+}
