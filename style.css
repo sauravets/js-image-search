@@ -12,9 +12,10 @@ form.search-image input[type=text] {
     float: left;
     width: 50%;
     background: #f1f1f1;
+    /* background-image: url('images/index.png'); */
   }
 
-form.search-image button{
+/* form.search-image button{
     float: left;
     width: 15%;
     padding: 10px;
@@ -27,7 +28,7 @@ form.search-image button{
 }
 form.search-image button:hover{
     background: #0b7dda;
-}
+} */
 
 form.search-image::after {
     content: "";
@@ -46,7 +47,6 @@ form.search-image::after {
 }
 
 #list{
-  border: 1px dotted #ccc;
   text-align: left;
   width: 50%;
   margin-left: auto;

@@ -1,5 +1,5 @@
 // Create array of object-
-var images = [{ keyword: "fruits,apple", imageName: "apple.webp" },
+var img_arr = [{ keyword: "fruits,apple", imageName: "apple.webp" },
 { keyword: "vehicle,bike", imageName: "bike.jpeg" },
 { keyword: "birds", imageName: "bird.jpeg" },
 { keyword: "birds,brazil-bird", imageName: "brazil-bird.webp" },
@@ -39,55 +39,44 @@ var images = [{ keyword: "fruits,apple", imageName: "apple.webp" },
 
 images_html();
 
-document.getElementById("myinput").addEventListener("keyup", function (event) {
+document.addEventListener("keyup", function image_search(event) {
     event.preventDefault();
     let search_keyword = document.getElementById("myinput").value.toLowerCase();
-    // let list =document.getElementById("list");
-    // create ul element-
-    // let ul = document.createElement('ul');
-    // ul.setAttribute('style','padding:0;magin:0');
 
-    // for(let a=0;a<images.length;a++){
-    //     let li = document.createElement('li');
-    //     li.innerHTML = images[a];
-    //     li.setAttribute('style','display:block');
-    //     ul.appendChild(li);
-    //    li.appendChild(search_keyword);
-    // list.appendChild(ul);
-    // }
-    // let search = ['hello','world','monday','tuesday'];
-    
-     
- 
-// Store input values in local storage-
-    let pics = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-    if (!pics.includes(search_keyword))//Prevent duplicate values.
-        pics.push(search_keyword);
-    localStorage.setItem('search_keyword', JSON.stringify(pics));
+    // Store input values in local storage-
+    let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+    if (!local_storage.includes(search_keyword))//Prevent duplicate values.
+        local_storage.push(search_keyword);
+    localStorage.setItem('search_keyword', JSON.stringify(local_storage));
 
-    function prediction(input){
-        if (input == ''){
-            return [];
-        }
-        
+    // Show prediction on search bar-
+    function prediction() {
         let reg = new RegExp(search_keyword);
-        return pics.filter(function(term){
-            if(term.match(reg)){
-                return term;
-            }
-        });
+        if (search_keyword != '' && search_keyword.length >= 3) {
+            return local_storage.filter(function (term) {
+                if (term.match(reg)) {
+                    return term;
+                }
+            });
+        }
     }
+    // document.addEventListener("keydown",function(e){
+    //     if(e.keyCode==13){
+    //        
+    //     }
+    // })
+
     prediction_result();
 
-    function prediction_result(val){
+    function prediction_result() {
         let res = document.getElementById('list');
         res.innerHTML = '';
         let list = '';
-        let terms = prediction(val);
-        for(let i=0;i<terms.length;i++){
+        let terms = prediction();
+        for (let i = 0; i < terms.length; i++) {
             list += '<li>' + terms[i] + '</li>';
         }
-        res.innerHTML = '<ul>' + list + '</ul>'; 
+        res.innerHTML = '<ul>' + list + '</ul>';
     }
     images_html(search_keyword);
 
@@ -95,8 +84,8 @@ document.getElementById("myinput").addEventListener("keyup", function (event) {
 // Search images using search_keyword-
 function images_html(search_keyword = null) {
     let html = '';
-    for (i = 0; i < images.length; i++) {
-        let img = images[i];
+    for (i = 0; i < img_arr.length; i++) {
+        let img = img_arr[i];
         if (search_keyword) {
             if (img.keyword.indexOf(search_keyword) > -1) {
                 html += ' <div class="col-md-4">';
@@ -108,9 +97,9 @@ function images_html(search_keyword = null) {
             html += '<img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt="">';
             html += '</div>';
         }
-        // setTimeout(function(){
-        document.getElementById("ets-filtered-img").innerHTML = html;
-    // },1000);
+        setTimeout(function () {
+            document.getElementById("ets-filtered-img").innerHTML = html;
+        }, 1000);
     }
 }
 
