@@ -45,38 +45,36 @@ document.addEventListener("keyup", function image_search(event) {
 
     // Store input values in local storage-
     let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-    if (!local_storage.includes(search_keyword))//Prevent duplicate values.
-        local_storage.push(search_keyword);
+    if (!local_storage.includes(search_keyword)){ //Prevent duplicate values.
+        if (search_keyword.length >= 3){ //store maximum 3 letter of data
+            local_storage.push(search_keyword);
+        }
+    }
     localStorage.setItem('search_keyword', JSON.stringify(local_storage));
 
-    // Show prediction on search bar-
+    // Starting prediction search-
     function prediction() {
         let reg = new RegExp(search_keyword);
-        if (search_keyword != '' && search_keyword.length >= 3) {
-            return local_storage.filter(function (term) {
+        return local_storage.filter(function (term) {
+            if (search_keyword != '' && search_keyword.length >= 3){ //Search keyword after 3 letter
                 if (term.match(reg)) {
                     return term;
                 }
-            });
-        }
+            }
+        });
     }
-    // document.addEventListener("keydown",function(e){
-    //     if(e.keyCode==13){
-    //        
-    //     }
-    // })
 
     prediction_result();
-
+    // Show prediction list/result-
     function prediction_result() {
-        let res = document.getElementById('list');
-        res.innerHTML = '';
+        let div = document.getElementById('list');
+        div.innerHTML = '';
         let list = '';
-        let terms = prediction();
-        for (let i = 0; i < terms.length; i++) {
-            list += '<li>' + terms[i] + '</li>';
+        let items = prediction();
+        for (let i = 0; i < items.length; i++) {
+            list += '<li>' + items[i] + '</li>'; //Create li dynamically
         }
-        res.innerHTML = '<ul>' + list + '</ul>';
+        div.innerHTML = '<ul>' + list + '</ul>';
     }
     images_html(search_keyword);
 
@@ -99,7 +97,7 @@ function images_html(search_keyword = null) {
         }
         setTimeout(function () {
             document.getElementById("ets-filtered-img").innerHTML = html;
-        }, 1000);
+        }, 1000); //Timeout function display images after 1 second
     }
 }
 
