@@ -1,5 +1,7 @@
+(function(){  //self-invoking function
+    
 // Create array of object-
-var img_arr = [{ keyword: "fruits,apple", imageName: "apple.webp" },
+let img_arr = [{ keyword: "fruits,apple", imageName: "apple.webp" },
 { keyword: "vehicle,bike", imageName: "bike.jpeg" },
 { keyword: "birds", imageName: "bird.jpeg" },
 { keyword: "birds,brazil-bird", imageName: "brazil-bird.webp" },
@@ -63,10 +65,10 @@ document.addEventListener("keyup", function image_search(event) {
             }
         });
     }
-
+   
     prediction_result();
-    // Show prediction list/result-
-    function prediction_result() {
+    // // Show prediction list/result-
+      function prediction_result() {
         let div = document.getElementById('list');
         div.innerHTML = '';
         let list = '';
@@ -76,9 +78,16 @@ document.addEventListener("keyup", function image_search(event) {
         }
         div.innerHTML = '<ul>' + list + '</ul>';
     }
-    images_html(search_keyword);
+    
+    document.addEventListener("click",function (){
+        let new_data = JSON.parse(localStorage.getItem('search_keyword'));
+        console.log(new_data);
+       
+        });
 
+        images_html(search_keyword);
 });
+
 // Search images using search_keyword-
 function images_html(search_keyword = null) {
     let html = '';
@@ -100,5 +109,5 @@ function images_html(search_keyword = null) {
         }, 1000); //Timeout function display images after 1 second
     }
 }
-
+})();
 
