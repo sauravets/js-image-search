@@ -12,23 +12,8 @@ form.search-image input[type=text] {
     float: left;
     width: 50%;
     background: #f1f1f1;
-    /* background-image: url('images/index.png'); */
   }
 
-/* form.search-image button{
-    float: left;
-    width: 15%;
-    padding: 10px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid gray;
-    border-left: none;
-    cursor: pointer;
-}
-form.search-image button:hover{
-    background: #0b7dda;
-} */
 
 form.search-image::after {
     content: "";
@@ -46,23 +31,27 @@ form.search-image::after {
     box-shadow: 2px 3px 10px;
 }
 
-#list{
-  text-align: left;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 3px;
+* {
+  box-sizing: border-box;
 }
-#list ul{
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+
+body {
+  font: 16px Arial;  
 }
-#list ul li{
-padding: 5px 0px;
+
+.prediction {
+  display: inline-block;
+  width: 700px;
 }
-#list ul li:hover{
-  background: #eee;
+
+.prediction-items {
+  display: block;
+}
+
+.prediction-items div {
+  padding: 10px;
+  padding-top: 5px;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+  width: 350px;
 }

@@ -42,46 +42,60 @@
     images_html();
 
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
+    let inp = document.getElementById('myinput');
 
- 
-    document.getElementById("myinput").addEventListener("keyup", function (event) {
+    inp.addEventListener("keyup", function (event) {
         event.preventDefault();
-        let search_keyword = document.getElementById("myinput").value.toLowerCase();
+        let search_keyword = inp.value.toLowerCase();
 
         // Store input values in local storage-
         let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
         if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
             if (search_keyword.length >= 3) { //store maximum 3 letter of data
+                // if(img_arr.includes(search_keyword)){
                 local_storage.push(search_keyword);
+            // }
+                }
             }
-        }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
 
         // document.addEventListener('click', prediction)
         // document.addEventListener('click',function (){
 
         // });
-        function prediction() {
-            let reg = new RegExp(search_keyword);
-            return get_ls.filter(function (term) {
-                if (term.match(reg)){
-                    return term;
-                }
-            });
-        }
+        // 
 
-        prediction_result();
-        // Show prediction list/result-
-        function prediction_result() {
-            let div = document.getElementById('list');
-            div.innerHTML = '';
-            let list = '';
-            let items = prediction();
-            for (let i = 0; i < items.length; i++) {
-                list += '<li>' + items[i] + '</li>'; //Create li dynamically
+        /* display the prediction on input text-*/
+        inp.addEventListener("keyup", function () {
+            let a, b, i, val = this.value;
+            closeAllLists();
+            if (!val) { return false; }
+            a = document.createElement("DIV"); /*create a DIV element that will contain the items (values):*/
+            a.setAttribute("class", "prediction-items");
+            this.parentNode.appendChild(a);
+            for (i = 0; i < get_ls.length; i++) {
+                if (get_ls[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    b = document.createElement("DIV");  /*create a DIV element for each matching element:*/
+                    b.innerHTML = "<strong>" + get_ls[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += get_ls[i].substr(val.length);
+                    a.appendChild(b);
+                }
             }
-            div.innerHTML = '<ul>' + list + '</ul>';
+        });
+        /*close all prediction lists in the document,
+          except the one passed as an argument:*/
+        function closeAllLists(elmnt) {
+            let x = document.getElementsByClassName("prediction-items");
+            for (let i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != search_keyword) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
         }
+         /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });  
 
         images_html(search_keyword);
     });
