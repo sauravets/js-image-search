@@ -43,6 +43,7 @@
 
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
     let inp = document.getElementById('myinput');
+    let img =img_arr;
 
     inp.addEventListener("keyup", function (event) {
         event.preventDefault();
@@ -50,23 +51,33 @@
 
         // Store input values in local storage-
         let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+        // let regex = img_arr;
+        // console.log(regex);
         if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
             if (search_keyword.length >= 3) { //store maximum 3 letter of data
-                // if(img_arr.includes(search_keyword)){
-                local_storage.push(search_keyword);
-            // }
-                }
+                // if(search_keyword.match(regex))
+                // if (img_arr.includes(search_keyword)) {
+                    if(img.keyword.includes(search_keyword))
+                    local_storage.push(search_keyword);
+                // }
             }
+        }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
 
         // document.addEventListener('click', prediction)
-        // document.addEventListener('click',function (){
-
-        // });
+        document.addEventListener('click',function (){
+            console.log(get_ls);
+            if(search_keyword){
+                return JSON.parse(localStorage.getItem('search_keyword'));
+            }
+            // else{
+            //     return [];
+            // }
+        });
         // 
 
         /* display the prediction on input text-*/
-        inp.addEventListener("keyup", function () {
+        inp.addEventListener("keyup", function prediction() {
             let a, b, i, val = this.value;
             closeAllLists();
             if (!val) { return false; }
@@ -92,10 +103,10 @@
                 }
             }
         }
-         /*execute a function when someone clicks in the document:*/
+        /*execute a function when someone clicks in the document:*/
         document.addEventListener("click", function (e) {
             closeAllLists(e.target);
-        });  
+        });
 
         images_html(search_keyword);
     });
