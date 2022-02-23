@@ -39,66 +39,143 @@
     { keyword: "mobiles,vivo", imageName: "vivo-y3-4gb-ram-128g.jpg" },
     ];
 
-    images_html();
+    let keywords_arrray = ["vehicle", 'bike', "birds", "brazil-bird", "car", "fruits", "pomegranate", "strawberries",
+        "plum-headed-parakeet", "laptop", "acer-laptop", "iphone", "animals", "elephant", "lenovo-laptop", "oppo",
+        "samsumg", "micromax", "sparrow", "vivo"];
+
+    // keywords_arrray.split();
+    for (let i = 0; i <= keywords_arrray.length; i++) {
+        keywords_arrray[i];
+    }
 
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
     let inp = document.getElementById('myinput');
-    let img =img_arr;
 
-    inp.addEventListener("keyup", function (event) {
-        event.preventDefault();
-        let search_keyword = inp.value.toLowerCase();
 
-        // Store input values in local storage-
-        let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-        // let regex = img_arr;
-        // console.log(regex);
-        if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
-            if (search_keyword.length >= 3) { //store maximum 3 letter of data
-                // if(search_keyword.match(regex))
-                // if (img_arr.includes(search_keyword)) {
-                    if(img.keyword.includes(search_keyword))
-                    local_storage.push(search_keyword);
-                // }
+    // On page load
+    images_html();
+
+    // Search images using search_keyword-
+    function images_html(search_keyword = null) {
+        let html = '';
+        for (i = 0; i < img_arr.length; i++) {
+            let img = img_arr[i];
+            if (search_keyword) {
+                if (img.keyword.indexOf(search_keyword) > -1)
+                    html += '<div class="col-md-4"><img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt=""></div>';
+            } else {
+                html += '<div class="col-md-4"><img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt=""></div>';
             }
+            setTimeout(function () {
+                document.getElementById("ets-filtered-img").innerHTML = html;
+            }, 1000);
         }
-        localStorage.setItem('search_keyword', JSON.stringify(local_storage));
 
-        // document.addEventListener('click', prediction)
-        document.addEventListener('click',function (){
-            console.log(get_ls);
-            if(search_keyword){
-                return JSON.parse(localStorage.getItem('search_keyword'));
-            }
-            // else{
-            //     return [];
-            // }
-        });
-        // 
+        if (search_keyword) {
+            set_keyword_localstorage(search_keyword);
+        }
+    }
 
-        /* display the prediction on input text-*/
-        inp.addEventListener("keyup", function prediction() {
-            let a, b, i, val = this.value;
+    autocomplete(inp, get_ls);
+
+    inp.addEventListener("keyup", function (e) {
+        let search_keyword = document.getElementById('myinput').value;
+        images_html(search_keyword);
+    });
+
+    function autocomplete(inp, arr) {
+
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
             closeAllLists();
             if (!val) { return false; }
-            a = document.createElement("DIV"); /*create a DIV element that will contain the items (values):*/
-            a.setAttribute("class", "prediction-items");
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
             this.parentNode.appendChild(a);
-            for (i = 0; i < get_ls.length; i++) {
-                if (get_ls[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                    b = document.createElement("DIV");  /*create a DIV element for each matching element:*/
-                    b.innerHTML = "<strong>" + get_ls[i].substr(0, val.length) + "</strong>";
-                    b.innerHTML += get_ls[i].substr(val.length);
+
+
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function (e) {
+                        /*insert the value for the autocomplete text field:*/
+
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        images_html(this.getElementsByTagName("input")[0].value);
+
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
                     a.appendChild(b);
                 }
             }
         });
-        /*close all prediction lists in the document,
-          except the one passed as an argument:*/
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
         function closeAllLists(elmnt) {
-            let x = document.getElementsByClassName("prediction-items");
-            for (let i = 0; i < x.length; i++) {
-                if (elmnt != x[i] && elmnt != search_keyword) {
+            /*close all autocomplete lists in the document,
+            except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
                     x[i].parentNode.removeChild(x[i]);
                 }
             }
@@ -107,30 +184,20 @@
         document.addEventListener("click", function (e) {
             closeAllLists(e.target);
         });
+    }
 
-        images_html(search_keyword);
-    });
+    function set_keyword_localstorage(search_keyword) {
+        let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+        if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
 
-    // Search images using search_keyword-
-    function images_html(search_keyword = null) {
-        let html = '';
-        for (i = 0; i < img_arr.length; i++) {
-            let img = img_arr[i];
-            if (search_keyword) {
-                if (img.keyword.indexOf(search_keyword) > -1) {
-                    html += ' <div class="col-md-4">';
-                    html += '<img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt="">';
-                    html += '</div>';
+            if (search_keyword.length >= 3) { //store maximum 3 letter of data
+
+                if (keywords_arrray.includes(search_keyword)) {
+                    local_storage.push(search_keyword);
                 }
-            } else {
-                html += ' <div class="col-md-4">';
-                html += '<img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt="">';
-                html += '</div>';
+
             }
-            setTimeout(function () {
-                document.getElementById("ets-filtered-img").innerHTML = html;
-            }, 1000); //Timeout function display images after 1 second
         }
+        localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
 })();
-
