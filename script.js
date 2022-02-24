@@ -39,18 +39,8 @@
     { keyword: "mobiles,vivo", imageName: "vivo-y3-4gb-ram-128g.jpg" },
     ];
 
-    let keywords_arrray = ["vehicle", 'bike', "birds", "brazil-bird", "car", "fruits", "pomegranate", "strawberries",
-        "plum-headed-parakeet", "laptop", "acer-laptop", "iphone", "animals", "elephant", "lenovo-laptop", "oppo",
-        "samsumg", "micromax", "sparrow", "vivo"];
-
-    // keywords_arrray.split();
-    for (let i = 0; i <= keywords_arrray.length; i++) {
-        keywords_arrray[i];
-    }
-
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
     let inp = document.getElementById('myinput');
-
 
     // On page load
     images_html();
@@ -61,7 +51,7 @@
         for (i = 0; i < img_arr.length; i++) {
             let img = img_arr[i];
             if (search_keyword) {
-                if (img.keyword.indexOf(search_keyword) > -1)
+                if (img.keyword.indexOf(search_keyword) > -1 && search_keyword.length >= 3)
                     html += '<div class="col-md-4"><img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt=""></div>';
             } else {
                 html += '<div class="col-md-4"><img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt=""></div>';
@@ -76,105 +66,65 @@
         }
     }
 
-    autocomplete(inp, get_ls);
+    prediction(inp, get_ls);
 
     inp.addEventListener("keyup", function (e) {
         let search_keyword = document.getElementById('myinput').value;
         images_html(search_keyword);
     });
 
-    function autocomplete(inp, arr) {
+    function prediction(inp, get_ls) {
 
-        /*the autocomplete function takes two arguments,
-        the text field element and an array of possible autocompleted values:*/
-        var currentFocus;
+        /*the prediction function takes two arguments,
+        the text field element and an array of possible predictions values:*/
         /*execute a function when someone writes in the text field:*/
         inp.addEventListener("input", function (e) {
-            var a, b, i, val = this.value;
-            /*close any already open lists of autocompleted values*/
+            let a, b, i, val = this.value;
+            /*close any already open lists of predictions values*/
             closeAllLists();
             if (!val) { return false; }
-            currentFocus = -1;
             /*create a DIV element that will contain the items (values):*/
             a = document.createElement("DIV");
-            a.setAttribute("id", this.id + "autocomplete-list");
-            a.setAttribute("class", "autocomplete-items");
-            /*append the DIV element as a child of the autocomplete container:*/
+            
+            a.setAttribute("id", this.id + "prediction-list");
+            
+            a.setAttribute("class", "prediction-items");            
+            /*append the DIV element as a child of the prediction container:*/
             this.parentNode.appendChild(a);
-
+            
 
             /*for each item in the array...*/
-            for (i = 0; i < arr.length; i++) {
+            for (i = 0; i < get_ls.length; i++) {
                 /*check if the item starts with the same letters as the text field value:*/
-                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                if (get_ls[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                     /*create a DIV element for each matching element:*/
                     b = document.createElement("DIV");
                     /*make the matching letters bold:*/
-                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                    b.innerHTML += arr[i].substr(val.length);
+                    b.innerHTML = "<strong>" + get_ls[i].substr(0, val.length) + "</strong>";                    
+                    b.innerHTML += get_ls[i].substr(val.length);                   
                     /*insert a input field that will hold the current array item's value:*/
-                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    b.innerHTML += "<input type='hidden' value='" + get_ls[i] + "'>";                   
                     /*execute a function when someone clicks on the item value (DIV element):*/
                     b.addEventListener("click", function (e) {
-                        /*insert the value for the autocomplete text field:*/
+                        /*insert the value for the prediction text field:*/
 
                         inp.value = this.getElementsByTagName("input")[0].value;
                         images_html(this.getElementsByTagName("input")[0].value);
-
-                        /*close the list of autocompleted values,
-                        (or any other open lists of autocompleted values:*/
+                                                
+                        /*close the list of predictions values,
+                        (or any other open lists of predictions values:*/
                         closeAllLists();
                     });
                     a.appendChild(b);
                 }
             }
         });
-        /*execute a function presses a key on the keyboard:*/
-        inp.addEventListener("keydown", function (e) {
-            var x = document.getElementById(this.id + "autocomplete-list");
-            if (x) x = x.getElementsByTagName("div");
-            if (e.keyCode == 40) {
-                /*If the arrow DOWN key is pressed,
-                increase the currentFocus variable:*/
-                currentFocus++;
-                /*and and make the current item more visible:*/
-                addActive(x);
-            } else if (e.keyCode == 38) { //up
-                /*If the arrow UP key is pressed,
-                decrease the currentFocus variable:*/
-                currentFocus--;
-                /*and and make the current item more visible:*/
-                addActive(x);
-            } else if (e.keyCode == 13) {
-                /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                e.preventDefault();
-                if (currentFocus > -1) {
-                    /*and simulate a click on the "active" item:*/
-                    if (x) x[currentFocus].click();
-                }
-            }
-        });
-        function addActive(x) {
-            /*a function to classify an item as "active":*/
-            if (!x) return false;
-            /*start by removing the "active" class on all items:*/
-            removeActive(x);
-            if (currentFocus >= x.length) currentFocus = 0;
-            if (currentFocus < 0) currentFocus = (x.length - 1);
-            /*add class "autocomplete-active":*/
-            x[currentFocus].classList.add("autocomplete-active");
-        }
-        function removeActive(x) {
-            /*a function to remove the "active" class from all autocomplete items:*/
-            for (var i = 0; i < x.length; i++) {
-                x[i].classList.remove("autocomplete-active");
-            }
-        }
+
         function closeAllLists(elmnt) {
-            /*close all autocomplete lists in the document,
+            /*close all prediction lists in the document,
             except the one passed as an argument:*/
-            var x = document.getElementsByClassName("autocomplete-items");
-            for (var i = 0; i < x.length; i++) {
+            let x = document.getElementsByClassName("prediction-items");
+            for (let i = 0; i < x.length; i++) {
                 if (elmnt != x[i] && elmnt != inp) {
                     x[i].parentNode.removeChild(x[i]);
                 }
@@ -189,15 +139,19 @@
     function set_keyword_localstorage(search_keyword) {
         let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
         if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
-
-            if (search_keyword.length >= 3) { //store maximum 3 letter of data
-
-                if (keywords_arrray.includes(search_keyword)) {
-                    local_storage.push(search_keyword);
-                }
-
+            if (search_keyword.length >= 3) { //store maximum 3 letter of data              
+                local_storage.push(search_keyword);
             }
         }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
+
+    inp.addEventListener('click', function () {
+      let get_data = JSON.parse(localStorage.getItem('search_keyword'));     
+    //   let new_data = get_data.toString();
+      console.log(get_data);
+    //   console.log(new_data);
+
+    });
+
 })();
