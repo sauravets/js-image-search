@@ -41,7 +41,8 @@
 
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
     let inp = document.getElementById('myinput');
-
+    // let search_keyword = document.getElementById('myinput');
+    // let count =0;
     // On page load
     images_html();
 
@@ -147,4 +148,17 @@
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
 
+    // count_keywords(search_keyword);
+    
+    // function count_keywords(search_keyword){
+    //     for(let i=0; i<img_arr; i++){
+    //         img_arr[i];
+    //         if(local_storage == search_keyword){
+    //             count ++;
+    //         }
+    //     }
+    //     console.log(search_keyword);
+    //     console.log(count);
+    // }
+    
 })();
