@@ -73,6 +73,11 @@
         images_html(search_keyword);
     });
 
+    inp.addEventListener('click', function () {
+        get_ls = JSON.parse(localStorage.getItem('search_keyword'));
+         prediction(inp, get_ls) 
+     });
+
     function prediction(inp, get_ls) {
 
         /*the prediction function takes two arguments,
@@ -85,13 +90,13 @@
             if (!val) { return false; }
             /*create a DIV element that will contain the items (values):*/
             a = document.createElement("DIV");
-            
+
             a.setAttribute("id", this.id + "prediction-list");
-            
-            a.setAttribute("class", "prediction-items");            
+
+            a.setAttribute("class", "prediction-items");
             /*append the DIV element as a child of the prediction container:*/
             this.parentNode.appendChild(a);
-            
+
 
             /*for each item in the array...*/
             for (i = 0; i < get_ls.length; i++) {
@@ -100,17 +105,17 @@
                     /*create a DIV element for each matching element:*/
                     b = document.createElement("DIV");
                     /*make the matching letters bold:*/
-                    b.innerHTML = "<strong>" + get_ls[i].substr(0, val.length) + "</strong>";                    
-                    b.innerHTML += get_ls[i].substr(val.length);                   
+                    b.innerHTML = "<strong>" + get_ls[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += get_ls[i].substr(val.length);
                     /*insert a input field that will hold the current array item's value:*/
-                    b.innerHTML += "<input type='hidden' value='" + get_ls[i] + "'>";                   
+                    b.innerHTML += "<input type='hidden' value='" + get_ls[i] + "'>";
                     /*execute a function when someone clicks on the item value (DIV element):*/
                     b.addEventListener("click", function (e) {
                         /*insert the value for the prediction text field:*/
 
                         inp.value = this.getElementsByTagName("input")[0].value;
                         images_html(this.getElementsByTagName("input")[0].value);
-                                                
+
                         /*close the list of predictions values,
                         (or any other open lists of predictions values:*/
                         closeAllLists();
@@ -145,13 +150,5 @@
         }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
-
-    inp.addEventListener('click', function () {
-      let get_data = JSON.parse(localStorage.getItem('search_keyword'));     
-    //   let new_data = get_data.toString();
-      console.log(get_data);
-    //   console.log(new_data);
-
-    });
 
 })();
