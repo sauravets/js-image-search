@@ -73,9 +73,10 @@
         images_html(search_keyword);
     });
 
+    // get local storage data in a variable-
     inp.addEventListener('click', function () {
         get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-         prediction(inp, get_ls) 
+         prediction(inp, get_ls);
      });
 
     function prediction(inp, get_ls) {
@@ -90,14 +91,10 @@
             if (!val) { return false; }
             /*create a DIV element that will contain the items (values):*/
             a = document.createElement("DIV");
-
             a.setAttribute("id", this.id + "prediction-list");
-
             a.setAttribute("class", "prediction-items");
             /*append the DIV element as a child of the prediction container:*/
             this.parentNode.appendChild(a);
-
-
             /*for each item in the array...*/
             for (i = 0; i < get_ls.length; i++) {
                 /*check if the item starts with the same letters as the text field value:*/
@@ -112,10 +109,8 @@
                     /*execute a function when someone clicks on the item value (DIV element):*/
                     b.addEventListener("click", function (e) {
                         /*insert the value for the prediction text field:*/
-
                         inp.value = this.getElementsByTagName("input")[0].value;
                         images_html(this.getElementsByTagName("input")[0].value);
-
                         /*close the list of predictions values,
                         (or any other open lists of predictions values:*/
                         closeAllLists();
@@ -141,6 +136,7 @@
         });
     }
 
+    // set and get local storage data-
     function set_keyword_localstorage(search_keyword) {
         let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
         if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
