@@ -77,8 +77,8 @@
     // get local storage data in a variable-
     inp.addEventListener('click', function () {
         get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-         prediction(inp, get_ls);
-     });
+        prediction(inp, get_ls);
+    });
 
     function prediction(inp, get_ls) {
 
@@ -148,17 +148,38 @@
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
 
-    // count_keywords(search_keyword);
-    
-    // function count_keywords(search_keyword){
-    //     for(let i=0; i<img_arr; i++){
-    //         img_arr[i];
-    //         if(local_storage == search_keyword){
-    //             count ++;
-    //         }
+    // inp.addEventListener('keyup',function () {
+    //     let words = document.getElementById('myinput').value;
+    //     let word = words.split(" ");
+    //     let wordMap = {};
+    //     console.log(word);
+    //     for (let i = 0; i < word.length; i++) {
+    //         let currentWordCount = wordMap[words[i]];
+    //         let count = currentWordCount ? currentWordCount : 0;
+    //         wordMap[word[i]] = count + 1;
     //     }
-    //     console.log(search_keyword);
-    //     console.log(count);
-    // }
-    
+    //     return wordMap;
+
+    // });
+// count_keywords();
+//     function count_keywords() {
+    inp.addEventListener('keyup',function(){
+        let keyword = img_arr.keyword,
+            // split = keyword.split(" "),
+            obj = {};
+        console.log(keyword);
+        // console.log(split);
+        console.log(obj);
+        for (let i = 0; i < keyword.length; i++) {
+            if (obj[keyword[i]] === undefined) {
+                obj[keyword[i]] = 1;
+            }
+            else {
+                obj[keyword[i]]++;
+            }
+        }
+        console.log(JSON.stringify(obj));
+    });
+   
+
 })();
