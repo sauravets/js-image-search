@@ -145,41 +145,65 @@
                 local_storage.push(search_keyword);
             }
         }
-        localStorage.setItem('search_keyword', JSON.stringify(local_storage));
+        // localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
 
-    // inp.addEventListener('keyup',function () {
-    //     let words = document.getElementById('myinput').value;
-    //     let word = words.split(" ");
-    //     let wordMap = {};
-    //     console.log(word);
-    //     for (let i = 0; i < word.length; i++) {
-    //         let currentWordCount = wordMap[words[i]];
-    //         let count = currentWordCount ? currentWordCount : 0;
-    //         wordMap[word[i]] = count + 1;
+    // count_keywords();
+    //     function count_keywords() {
+    // inp.addEventListener('keyup',function(){
+    //     let keyword = inp.value;
+    //     //    let split = keyword.split(" ");
+    //     //    let obj = {};
+    //     // console.log(keyword);
+    //      console.log(img_arr);
+    //     // console.log(obj);
+    //     for (let i = 0; i<img_arr.keyword.length; i++) {
+    //         if (img.keyword[i] == keyword) {
+    //             img.keyword[i] = 1;
+    //         }
+    //         else {
+    //             img.keyword[i]++;
+    //         }
     //     }
-    //     return wordMap;
-
+    //     console.log(JSON.stringify(img.keyword));
     // });
-// count_keywords();
-//     function count_keywords() {
+
+    // inp.addEventListener('keyup',function(){
+    //     let search_keyword = inp.value;
+    //     console.log(search_keyword);
+    //     let count = 0;
+    //     console.log(count);
+    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
+    //     console.log(get_ls);           
+    // }
+    // );
+
     inp.addEventListener('keyup',function(){
-        let keyword = img_arr.keyword,
+        let keyword = inp.value,
+        get_ls = JSON.parse(localStorage.getItem('search_keyword'));
             // split = keyword.split(" "),
             obj = {};
         console.log(keyword);
         // console.log(split);
         console.log(obj);
-        for (let i = 0; i < keyword.length; i++) {
-            if (obj[keyword[i]] === undefined) {
-                obj[keyword[i]] = 1;
+        // for (let i = 0; i < get_ls.length; i++) {
+            if (obj[get_ls[i]] == undefined) {
+                obj[get_ls[i]] = 1;
             }
             else {
-                obj[keyword[i]]++;
+                obj[get_ls[i]]++;
             }
-        }
+        // }
         console.log(JSON.stringify(obj));
     });
-   
-
+    
 })();
+
+
+
+//  Array(
+//      "appale", => 4
+//      "car", => 1,
+//      "leptop"= 3,
+//      "handbag"
+//  );
