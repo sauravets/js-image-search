@@ -65,9 +65,12 @@
         if (search_keyword) {
             set_keyword_localstorage(search_keyword);
         }
+        // if (search_keyword) {
+        //     count_keywords();
+        // }
     }
 
-    prediction(inp, get_ls);
+    prediction();
 
     inp.addEventListener("keyup", function (e) {
         let search_keyword = document.getElementById('myinput').value;
@@ -77,10 +80,10 @@
     // get local storage data in a variable-
     inp.addEventListener('click', function () {
         get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-        prediction(inp, get_ls);
+        prediction();
     });
 
-    function prediction(inp, get_ls) {
+    function prediction() {
 
         /*the prediction function takes two arguments,
         the text field element and an array of possible predictions values:*/
@@ -137,60 +140,96 @@
         });
     }
 
-// set and get local storage data-
-function set_keyword_localstorage(search_keyword) {
-    let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-    if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
-        if (search_keyword.length >= 3) { //store maximum 3 letter of data              
-            local_storage.push(search_keyword);
+    // set and get local storage data-
+    // function set_keyword_localstorage(search_keyword) {
+    //     let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+    //     if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
+    //         if (search_keyword.length >= 3) { //store maximum 3 letter of data              
+    //             local_storage.push(search_keyword);
+    //         }
+    //     }
+    //     localStorage.setItem('search_keyword', JSON.stringify(local_storage));
+    // }
+    // count_keywords();
+    // function count_keywords() {
+    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
+
+    //     let obj = {};
+
+    //     for (let i = 0; i < get_ls.length; i++) {
+    //         if (obj[get_ls[i]] === undefined) {
+    //             obj[get_ls[i]] = 1;
+    //         } else {
+    //             obj[get_ls[i]]++;
+    //         }
+    //     }
+
+    //     console.log(obj);
+    // }
+
+
+    function set_keyword_localstorage(search_keyword) {
+        console.log(window.performance.now())
+        let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+        
+        if (local_storage.length > 0) {console.log(local_storage.length);
+            for (var i = 0; i < local_storage.length; i++) {  
+                console.log(i);             
+                if (search_keyword.length >= 3) {                   
+                    if (local_storage[i].keyword == search_keyword) {   
+                        console.log(local_storage[i]);                    
+                        local_storage[i].count = local_storage[i].count + 1;
+                    } else {
+                        //store maximum 3 letter of data              
+                        local_storage.push({ keyword: search_keyword, count: 1 });
+                    }                   
+                }
+            }
         }
+        localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
-    localStorage.setItem('search_keyword', JSON.stringify(local_storage));
-}
 
-// function set_keyword_localstorage(search_keyword) {
-//     let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-//     if(local_storage.length > 0){
-//         for (var i = 0; i < local_storage.length; i++) {
-//             if (search_keyword.length >= 3) {
-//                 if(local_storage[i].keyword  == search_keyword) {
-//                     local_storage[i].count = local_storage[i].count + 1; 
-//                 } else {
-//                     //store maximum 3 letter of data              
-//                     local_storage.push({keyword: search_keyword, count: 1});
-//                 }
-//             }
-//         }
+    //     } else {
+    //         if (search_keyword.length >= 3) { //store maximum 3 letter of data              
+    //             local_storage.push({keyword: search_keyword, count: 1});
+    //         }
+    //     }
+    //     console.log(local_storage);
+    //       
+    // }
 
-//     } else {
-//         if (search_keyword.length >= 3) { //store maximum 3 letter of data              
-//             local_storage.push({keyword: search_keyword, count: 1});
-//         }
-//     }
-//     console.log(local_storage);
-//     localStorage.setItem('search_keyword', JSON.stringify(local_storage));  
-// }
+    // count_keywords();
 
-count_keywords();
+    // function count_keywords() {
+    //     let search_keyword = document.getElementById('myinput').value;
+    //     console.log(search_keyword);
+    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
+    //     console.log(get_ls);
+    //     let count;
+    //     if(get_ls.includes(search_keyword)){
+    //         console.log((get_ls.includes(search_keyword)));
+    //         count+1;
+    //         console.log(count);
+    //     }
+    //     else{
+    //         count = 1;
+    //     }
+    //     // console.log(get_ls);
+    // }
 
-function count_keywords(){
-    get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-    console.log(get_ls);
-}
-
-// wordCount();
-// function wordCount() {
-//     // var stringArray = str.split(' ');
-//     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-//     var count = 0;
-//     for (var i = 0; i < get_ls.length; i++) {
-//         var word = get_ls[i];
-//         if (/[A-Za-z]/.test(word)) {
-//             count++
-//         }
-//     }
-//     // return count
-//     console.log(count);
-// }
+    // wordCount();
+    // function wordCount() {
+    //     // var stringArray = str.split(' ');
+    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
+    //     var count = 0;
+    //     for (var i = 0; i < get_ls.length; i++) {
+    //         var word = get_ls[i];
+    //         if (/[A-Za-z]/.test(word)) {
+    //             count++
+    //         }
+    //     }
+    //     // return count
+    //     console.log(count);
+    // }
 
 })();
