@@ -150,30 +150,14 @@
     //     }
     //     localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     // }
-    // count_keywords();
-    // function count_keywords() {
-    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-
-    //     let obj = {};
-
-    //     for (let i = 0; i < get_ls.length; i++) {
-    //         if (obj[get_ls[i]] === undefined) {
-    //             obj[get_ls[i]] = 1;
-    //         } else {
-    //             obj[get_ls[i]]++;
-    //         }
-    //     }
-
-    //     console.log(obj);
-    // }
-
-
+ 
+    
     function set_keyword_localstorage(search_keyword) {
         console.log(window.performance.now())
         let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
         
         if (local_storage.length > 0) {console.log(local_storage.length);
-            for (var i = 0; i < local_storage.length; i++) {  
+            // for (var i = 0; i < local_storage.length; i++) {  
                 console.log(i);             
                 if (search_keyword.length >= 3) {                   
                     if (local_storage[i].keyword == search_keyword) {   
@@ -184,52 +168,10 @@
                         local_storage.push({ keyword: search_keyword, count: 1 });
                     }                   
                 }
-            }
+            // }
         }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
 
-    //     } else {
-    //         if (search_keyword.length >= 3) { //store maximum 3 letter of data              
-    //             local_storage.push({keyword: search_keyword, count: 1});
-    //         }
-    //     }
-    //     console.log(local_storage);
-    //       
-    // }
-
-    // count_keywords();
-
-    // function count_keywords() {
-    //     let search_keyword = document.getElementById('myinput').value;
-    //     console.log(search_keyword);
-    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-    //     console.log(get_ls);
-    //     let count;
-    //     if(get_ls.includes(search_keyword)){
-    //         console.log((get_ls.includes(search_keyword)));
-    //         count+1;
-    //         console.log(count);
-    //     }
-    //     else{
-    //         count = 1;
-    //     }
-    //     // console.log(get_ls);
-    // }
-
-    // wordCount();
-    // function wordCount() {
-    //     // var stringArray = str.split(' ');
-    //     get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-    //     var count = 0;
-    //     for (var i = 0; i < get_ls.length; i++) {
-    //         var word = get_ls[i];
-    //         if (/[A-Za-z]/.test(word)) {
-    //             count++
-    //         }
-    //     }
-    //     // return count
-    //     console.log(count);
-    // }
 
 })();
