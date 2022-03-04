@@ -65,12 +65,9 @@
         if (search_keyword) {
             set_keyword_localstorage(search_keyword);
         }
-        // if (search_keyword) {
-        //     count_keywords();
-        // }
     }
 
-    prediction();
+    prediction(inp, get_ls);
 
     inp.addEventListener("keyup", function (e) {
         let search_keyword = document.getElementById('myinput').value;
@@ -80,10 +77,10 @@
     // get local storage data in a variable-
     inp.addEventListener('click', function () {
         get_ls = JSON.parse(localStorage.getItem('search_keyword'));
-        prediction();
+        prediction(inp, get_ls);
     });
 
-    function prediction() {
+    function prediction(inp, get_ls) {
 
         /*the prediction function takes two arguments,
         the text field element and an array of possible predictions values:*/
@@ -99,28 +96,36 @@
             a.setAttribute("class", "prediction-items");
             /*append the DIV element as a child of the prediction container:*/
             this.parentNode.appendChild(a);
-            /*for each item in the array...*/
-            for (i = 0; i < get_ls.length; i++) {
-                /*check if the item starts with the same letters as the text field value:*/
-                if (get_ls[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                    /*create a DIV element for each matching element:*/
-                    b = document.createElement("DIV");
-                    /*make the matching letters bold:*/
-                    b.innerHTML = "<strong>" + get_ls[i].substr(0, val.length) + "</strong>";
-                    b.innerHTML += get_ls[i].substr(val.length);
-                    /*insert a input field that will hold the current array item's value:*/
-                    b.innerHTML += "<input type='hidden' value='" + get_ls[i] + "'>";
-                    /*execute a function when someone clicks on the item value (DIV element):*/
-                    b.addEventListener("click", function (e) {
-                        /*insert the value for the prediction text field:*/
-                        inp.value = this.getElementsByTagName("input")[0].value;
-                        images_html(this.getElementsByTagName("input")[0].value);
-                        /*close the list of predictions values,
-                        (or any other open lists of predictions values:*/
-                        closeAllLists();
-                    });
-                    a.appendChild(b);
+            if (get_ls) {
+                /*for each item in the array...*/
+                for (i = 0; i < get_ls.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (get_ls[i].keyword.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        //create a DIV element for each matching element:
+                        b = document.createElement("DIV");
+                        //make the matching letters bold:                                              
+                        b.innerHTML = "<strong>" + get_ls[i].keyword.substr(0, val.length) + "</strong>";
+                        b.innerHTML += get_ls[i].keyword.substr(val.length);
+                        //insert a input field that will hold the current array item's value:
+                        
+                        b.innerHTML += "<input type='hidden' value='" + get_ls[i].keyword + "'>";
+                         
+                        //execute a function when someone clicks on the item value (DIV element):
+                        b.addEventListener("click", function (e) {
+                            // insert the value for the prediction text field:                            
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            images_html(this.getElementsByTagName("input")[0].value);
+                            // close the list of predictions values,
+                            // (or any other open lists of predictions values:
+                            closeAllLists();
+                        });
+                        //  setTimeout(function(){
+                        a.appendChild(b);
+                        // },1000);                      
+                    }
                 }
+            } else {
+                images_html(this.value);
             }
         });
 
@@ -141,37 +146,29 @@
     }
 
     // set and get local storage data-
-    // function set_keyword_localstorage(search_keyword) {
-    //     let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-    //     if (!local_storage.includes(search_keyword)) { //Prevent duplicate values.
-    //         if (search_keyword.length >= 3) { //store maximum 3 letter of data              
-    //             local_storage.push(search_keyword);
-    //         }
-    //     }
-    //     localStorage.setItem('search_keyword', JSON.stringify(local_storage));
-    // }
- 
-    
     function set_keyword_localstorage(search_keyword) {
-        console.log(window.performance.now())
         let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-        
-        if (local_storage.length > 0) {console.log(local_storage.length);
-            // for (var i = 0; i < local_storage.length; i++) {  
-                console.log(i);             
-                if (search_keyword.length >= 3) {                   
-                    if (local_storage[i].keyword == search_keyword) {   
-                        console.log(local_storage[i]);                    
-                        local_storage[i].count = local_storage[i].count + 1;
-                    } else {
-                        //store maximum 3 letter of data              
-                        local_storage.push({ keyword: search_keyword, count: 1 });
-                    }                   
-                }
-            // }
+        // if (local_storage.length > 0) {
+        //     for (let i = 0; i < local_storage.length; i++) {
+        //         console.log(i);
+        // for(key in local_storage){
+        // console.log(key);
+        if (!local_storage.includes(search_keyword)) { //prevent from duplicate data.
+            if (search_keyword.length >= 3) {          //take minimum 3 letter.
+                // if (local_storage[i].keyword == search_keyword) {
+                //     local_storage[i].count = local_storage[i].count + 1;
+                // }
+                //  else {                            
+                local_storage.push({ keyword: search_keyword, count: 1 });
+                // }
+            }
         }
+        //     console.log(`${key}: ${local_storage[key]}`);
+        // }
+        // }
+        // }
+        console.log(local_storage);
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
-
 
 })();
