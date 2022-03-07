@@ -96,6 +96,7 @@
             /*append the DIV element as a child of the prediction container:*/
             this.parentNode.appendChild(a);
             /*for each item in the array...*/
+            if(get_ls){
             for (i = 0; i < get_ls.length; i++) {
                 /*check if the item starts with the same letters as the text field value:*/
                 if (get_ls[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
@@ -117,6 +118,7 @@
                     });
                     a.appendChild(b);
                 }
+            }
             }
         });
 
