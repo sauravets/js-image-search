@@ -41,8 +41,7 @@
 
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
     let inp = document.getElementById('myinput');
-    // let search_keyword = document.getElementById('myinput');
-    // let count =0;
+
     // On page load
     images_html();
 
@@ -52,22 +51,20 @@
         for (i = 0; i < img_arr.length; i++) {
             let img = img_arr[i];
             if (search_keyword) {
-                if (img.keyword.indexOf(search_keyword) > -1 && search_keyword.length >= 3){
-                    // console.log(search_keyword.length >= 3);
-                    console.log(img.keyword.indexOf(search_keyword) > -1);                                
+                if (img.keyword.indexOf(search_keyword) > -1 && search_keyword.length >= 3)
                     html += '<div class="col-md-4"><img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt=""></div>';
-                    if (search_keyword) {
-                        set_keyword_localstorage(search_keyword);
-                    }
-                }
             } else {
                 html += '<div class="col-md-4"><img src="images/' + img.imageName + '" class="img-fluid image" data-keyword="' + img.keyword + '" alt=""></div>';
             }
-            setTimeout(function () {
-                document.getElementById("ets-filtered-img").innerHTML = html;
-            }, 1000);
         }
-        
+        setTimeout(function () {
+            document.getElementById("ets-filtered-img").innerHTML = html;
+        }, 1000);
+        if (search_keyword && search_keyword.length >= 3) {
+            setTimeout(function () {
+                set_keyword_localstorage(search_keyword);
+            }, 500);
+        }
     }
 
     prediction(inp, get_ls);
@@ -99,36 +96,27 @@
             a.setAttribute("class", "prediction-items");
             /*append the DIV element as a child of the prediction container:*/
             this.parentNode.appendChild(a);
-            if (get_ls) {
-                /*for each item in the array...*/
-                for (i = 0; i < get_ls.length; i++) {
-                    /*check if the item starts with the same letters as the text field value:*/
-                    if (get_ls[i].keyword.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        //create a DIV element for each matching element:
-                        b = document.createElement("DIV");
-                        //make the matching letters bold:                                              
-                        b.innerHTML = "<strong>" + get_ls[i].keyword.substr(0, val.length) + "</strong>";
-                        b.innerHTML += get_ls[i].keyword.substr(val.length);
-                        //insert a input field that will hold the current array item's value:
 
-                        b.innerHTML += "<input type='hidden' value='" + get_ls[i].keyword + "'>";
-
-                        //execute a function when someone clicks on the item value (DIV element):
-                        b.addEventListener("click", function (e) {
-                            // insert the value for the prediction text field:                            
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            images_html(this.getElementsByTagName("input")[0].value);
-                            // close the list of predictions values,
-                            // (or any other open lists of predictions values:
-                            closeAllLists();
-                        });
-                        //  setTimeout(function(){
-                        a.appendChild(b);
-                        // },1000);                      
+            if (get_ls !== null) {
+                for (var key in get_ls) {
+                    if (get_ls.hasOwnProperty(key)) {
+                        if (key.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                            b = document.createElement("DIV");
+                            b.innerHTML = "<strong>" + key.substr(0, val.length) + "</strong>";
+                            b.innerHTML += key.substr(val.length);
+                            b.innerHTML += "<input type='hidden' value='" + get_ls[key] + "'>";
+                            b.innerHTML += "(" + get_ls[key] + ")";
+                            //execute a function when someone clicks on the item value (DIV element):
+                            b.addEventListener("click", function (e) {
+                                //insert the value for the prediction text field:
+                                inp.value = this.getElementsByTagName("input")[0].value;
+                                images_html(this.getElementsByTagName("input")[0].value);
+                                closeAllLists();
+                            });
+                            a.appendChild(b);
+                        }
                     }
                 }
-            } else {
-                images_html(this.value);
             }
         });
 
@@ -149,54 +137,69 @@
     }
 
     // set and get local storage data-
-    // function set_keyword_localstorage(search_keyword) {
-    //     let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
-    //     
-    //     // if (local_storage.length > 0) {
-    //         for (let i = 0; i < local_storage.length; i++) {
-    //             
-    //             // for(key in local_storage){
-    //             
-    //             if (!local_storage.includes(search_keyword)) { //prevent from duplicate data.
-    //                 if (search_keyword.length >= 3) {          //take minimum 3 letter.
-    //                     if (local_storage[i].keyword == search_keyword) {
-    //                         local_storage[i].count = local_storage[i].count + 1;
-    //                     }
-    //                     else {
-    //                         local_storage.push({ keyword: search_keyword, count: 1 });
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     // }
-    //    
-    //     localStorage.setItem('search_keyword', JSON.stringify(local_storage));
-    // }
-
     function set_keyword_localstorage(search_keyword) {
-        let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : [];
+        let local_storage = !!localStorage.getItem('search_keyword') ? JSON.parse(localStorage.getItem('search_keyword')) : {};
 
-        // let obj = { keyword: search_keyword, count: 1 };
-
-        // for (let i = 0; i < local_storage.length; i++) {
-            // let properties = Object.keys(local_storage);
-            ;
-            // for(let prop of properties){
-            
-            // }
-                       
-            if (search_keyword.length >= 3) {                      //take minimum 3 letter.
-                if (!local_storage.includes(search_keyword)) {    //prevent from duplicate data. 
-                    // if (local_storage[i].keyword == search_keyword) {
-                    //     local_storage[i].count = local_storage[i].count + 1;
-                    // }
-                    // else {
-                        local_storage.push({ keyword: search_keyword, count: 1 });
-                    // }
-                }
-            }
-        // }
+        if (search_keyword in local_storage) {
+            local_storage[search_keyword] = local_storage[search_keyword] + 1;
+        } else {
+            local_storage[search_keyword] = 1;
+        }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
+        console.log(local_storage);
     }
 
+    top_searches();
+    function top_searches() {
+        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));
+        console.log(stored_keyword);
+        stored_keyword.sort(function(a, b){return b.count-a.count});
+        console.log(stored_keyword);
+        // var obj = {
+        //     "app":4,
+        //     "apple":5,
+        //     "bik":3,
+        //     "bike":2,
+        //     "car":1,
+        // };
+    
+        // var arr = [];
+    
+        // for (var key in obj) {
+        //     if (obj.hasOwnProperty(key)) {
+        //         arr.push(obj[key]);
+        //     }
+        // }
+        
+        // document.write(arr.sort());
+    }
+
+
+
+
+
+
+
+    // top_searches();
+    // function top_searches() {
+    //     let select = document.getElementById('select');
+    //     let stored_arr = JSON.parse(localStorage.getItem('search_keyword'));
+    //     for (key in stored_arr) {                   
+    //         let option = document.createElement('Option');
+    //         let txt = document.createTextNode(stored_arr[key]);        
+    //         option.appendChild(txt);
+    //         option.setAttribute('value', stored_arr[key]);
+    //         select.insertBefore(option, select.lastChild);
+    //     }
+    // }
+
+    // function top_searches() {
+    //     let stored_arr = JSON.parse(localStorage.getItem('search_keyword'));
+
+    //     let option ="";
+    //     for(let i=0; i<stored_arr.length; i++){
+    //         option += '<option value = "'+stored_arr[i] +'">' +stored_arr[i] + "</option>";
+    //     }
+    //     document.getElementById("select").innerHTML = option;
+    // }
 })();
