@@ -152,9 +152,9 @@
     top_searches();
     function top_searches() {
         let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));
-        console.log(stored_keyword);
+        
         stored_keyword.sort(function(a, b){return b.count-a.count});
-        console.log(stored_keyword);
+        
         // var obj = {
         //     "app":4,
         //     "apple":5,
