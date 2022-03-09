@@ -101,10 +101,10 @@
                 for (var key in get_ls) {
                     if (get_ls.hasOwnProperty(key)) {
                         if (key.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                            b = document.createElement("DIV");                           
+                            b = document.createElement("DIV");
                             b.innerHTML = "<strong>" + key.substr(0, val.length) + "</strong>";
-                            b.innerHTML += key.substr(val.length);                            
-                            b.innerHTML += "<input type='hidden' value='" + get_ls[key] + "'>";                                                        
+                            b.innerHTML += key.substr(val.length);
+                            b.innerHTML += "<input type='hidden' value='" + get_ls[key] + "'>";
                             //execute a function when someone clicks on the item value (DIV element):
                             b.addEventListener("click", function (e) {
                                 //insert the value for the prediction text field:
@@ -149,42 +149,17 @@
 
     top_searches();
     function top_searches() {
-        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));        
-        let sort_keyword = '';
-        // stored_keyword.sort(function(a, b){return b.count-a.count});   
-        let arr = [];
-        for (let key in stored_keyword) {
-            if (stored_keyword.hasOwnProperty(key)) {
-                arr.push(stored_keyword[key]);
-            }
+        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));
+        let entries = Object.entries(stored_keyword);
+        let sort_keyword = entries.sort((a, b) => b[1] - a[1]);
+        let span_tag = document.getElementsByClassName("span_tag");                                  
+        span_tag = sort_keyword.slice(0, 5);
+        let div = document.getElementById("top_search");        
+        for (let i = 0; i < span_tag.length; i++) {   
+            let span = document.createElement("span");  
+            span.setAttribute("padding","10px");                                 
+            span.innerHTML = span_tag[i];            
+            div.appendChild(span);                    
         }
-        sort_keyword = arr.sort().reverse();
-        let span = document.createElement('span');        
     }
-
-
-
-
-    // top_searches();
-    // function top_searches() {
-    //     let select = document.getElementById('select');
-    //     let stored_arr = JSON.parse(localStorage.getItem('search_keyword'));
-    //     for (key in stored_arr) {                   
-    //         let option = document.createElement('Option');
-    //         let txt = document.createTextNode(stored_arr[key]);        
-    //         option.appendChild(txt);
-    //         option.setAttribute('value', stored_arr[key]);
-    //         select.insertBefore(option, select.lastChild);
-    //     }
-    // }
-
-    // function top_searches() {
-    //     let stored_arr = JSON.parse(localStorage.getItem('search_keyword'));
-
-    //     let option ="";
-    //     for(let i=0; i<stored_arr.length; i++){
-    //         option += '<option value = "'+stored_arr[i] +'">' +stored_arr[i] + "</option>";
-    //     }
-    //     document.getElementById("select").innerHTML = option;
-    // }
 })();
