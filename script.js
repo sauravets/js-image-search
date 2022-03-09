@@ -101,11 +101,10 @@
                 for (var key in get_ls) {
                     if (get_ls.hasOwnProperty(key)) {
                         if (key.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                            b = document.createElement("DIV");
+                            b = document.createElement("DIV");                           
                             b.innerHTML = "<strong>" + key.substr(0, val.length) + "</strong>";
-                            b.innerHTML += key.substr(val.length);
-                            b.innerHTML += "<input type='hidden' value='" + get_ls[key] + "'>";
-                            b.innerHTML += "(" + get_ls[key] + ")";
+                            b.innerHTML += key.substr(val.length);                            
+                            b.innerHTML += "<input type='hidden' value='" + get_ls[key] + "'>";                                                        
                             //execute a function when someone clicks on the item value (DIV element):
                             b.addEventListener("click", function (e) {
                                 //insert the value for the prediction text field:
@@ -146,36 +145,22 @@
             local_storage[search_keyword] = 1;
         }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
-        console.log(local_storage);
     }
 
     top_searches();
     function top_searches() {
-        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));
-        
-        stored_keyword.sort(function(a, b){return b.count-a.count});
-        
-        // var obj = {
-        //     "app":4,
-        //     "apple":5,
-        //     "bik":3,
-        //     "bike":2,
-        //     "car":1,
-        // };
-    
-        // var arr = [];
-    
-        // for (var key in obj) {
-        //     if (obj.hasOwnProperty(key)) {
-        //         arr.push(obj[key]);
-        //     }
-        // }
-        
-        // document.write(arr.sort());
+        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));        
+        let sort_keyword = '';
+        // stored_keyword.sort(function(a, b){return b.count-a.count});   
+        let arr = [];
+        for (let key in stored_keyword) {
+            if (stored_keyword.hasOwnProperty(key)) {
+                arr.push(stored_keyword[key]);
+            }
+        }
+        sort_keyword = arr.sort().reverse();
+        let span = document.createElement('span');        
     }
-
-
-
 
 
 
