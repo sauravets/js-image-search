@@ -104,7 +104,7 @@
                             b = document.createElement("DIV");
                             b.innerHTML = "<strong>" + key.substr(0, val.length) + "</strong>";
                             b.innerHTML += key.substr(val.length);
-                            b.innerHTML += "<input type='hidden' value='" + get_ls[key] + "'>";
+                            b.innerHTML += "<input type='hidden' value='" + key + "'>";
                             //execute a function when someone clicks on the item value (DIV element):
                             b.addEventListener("click", function (e) {
                                 //insert the value for the prediction text field:
@@ -152,14 +152,19 @@
         let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));
         let entries = Object.entries(stored_keyword);
         let sort_keyword = entries.sort((a, b) => b[1] - a[1]);
-        let span_tag = document.getElementsByClassName("span_tag");                                  
         span_tag = sort_keyword.slice(0, 5);
-        let div = document.getElementById("top_search");        
-        for (let i = 0; i < span_tag.length; i++) {   
-            let span = document.createElement("span");  
-            span.setAttribute("padding","10px");                                 
-            span.innerHTML = span_tag[i];            
-            div.appendChild(span);                    
+        let div = document.getElementById("top_search");
+        for (let i = 0; i < span_tag.length; i++) {
+            let span = document.createElement("span");
+            span.setAttribute("style", "padding:8px; border:1px solid #c6c3c3; margin-top: 10px; border-radius: 19px; cursor: pointer;");
+            span.setAttribute("class", "btn btn-outline-primary");
+            span.innerHTML = span_tag[i];
+            div.appendChild(span);
+            span.addEventListener("click", function(e) {                              
+                    images_html(e.target);                                         
+                console.log("hello");
+                console.log(images_html(e));
+            });
         }
     }
 })();

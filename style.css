@@ -70,13 +70,5 @@ body {
 }
 
 #top_search{
-  margin: 20px auto 20px auto;
+  padding-left: 15px;
 } 
-
-/* padding: 10px;
-border: 1px solid #c6c3c3;
-margin-top: 10px;
-border-radius: 19px;
-cursor: pointer; */
-
-/* margin: 20px auto 20px auto; -div-style */
