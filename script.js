@@ -147,6 +147,7 @@
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
     
+    // show top 5 search-keyword beneath search-bar:-
     top_searches();
     function top_searches() {
         let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));        
