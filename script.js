@@ -41,12 +41,12 @@
 
     let get_ls = JSON.parse(localStorage.getItem('search_keyword'));
     let inp = document.getElementById('myinput');
-
+   
     // On page load
     images_html();
 
     // Search images using search_keyword-
-    function images_html(search_keyword = null) {
+     function images_html(search_keyword = null) {
         let html = '';
         for (i = 0; i < img_arr.length; i++) {
             let img = img_arr[i];
@@ -108,7 +108,7 @@
                             //execute a function when someone clicks on the item value (DIV element):
                             b.addEventListener("click", function (e) {
                                 //insert the value for the prediction text field:
-                                inp.value = this.getElementsByTagName("input")[0].value;
+                                inp.value = this.getElementsByTagName("input")[0].value;                                
                                 images_html(this.getElementsByTagName("input")[0].value);
                                 closeAllLists();
                             });
@@ -146,10 +146,10 @@
         }
         localStorage.setItem('search_keyword', JSON.stringify(local_storage));
     }
-
+    
     top_searches();
     function top_searches() {
-        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));
+        let stored_keyword = JSON.parse(localStorage.getItem('search_keyword'));        
         let entries = Object.entries(stored_keyword);
         let sort_keyword = entries.sort((a, b) => b[1] - a[1]);
         span_tag = sort_keyword.slice(0, 5);
@@ -158,12 +158,11 @@
             let span = document.createElement("span");
             span.setAttribute("style", "padding:8px; border:1px solid #c6c3c3; margin-top: 10px; border-radius: 19px; cursor: pointer;");
             span.setAttribute("class", "btn btn-outline-primary");
+            span.setAttribute("keyword", span_tag[i][0]);
             span.innerHTML = span_tag[i];
             div.appendChild(span);
-            span.addEventListener("click", function(e) {                              
-                    images_html(e.target);                                         
-                console.log("hello");
-                console.log(images_html(e));
+            span.addEventListener("click", function(e) {   
+                images_html(this.getAttribute("keyword"));
             });
         }
     }
